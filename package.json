@@ -1,0 +1,11 @@
+{
+  "name": "resume-project2",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev -w server",
+    "dev:client": "npm run dev -w client"
+  }
+}

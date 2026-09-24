@@ -1,0 +1,1 @@
+{"version":3,"file":"MetricsManager.d.ts","sourceRoot":"","sources":["MetricsManager.ts"],"names":[],"mappings":"AAGA,cAAM,cAAc;IAChB,OAAO,CAAC,OAAO,CAAsB;IAE9B,IAAI,CAAC,QAAQ,EAAE,MAAM,QAgB3B;IAEM,SAAS,CAAC,MAAM,EAAE,MAAM,EAAE,UAAU,EAAE,MAAM,QAMlD;CACJ;AAED,eAAO,MAAM,SAAS,gBAAuB,CAAC"}
