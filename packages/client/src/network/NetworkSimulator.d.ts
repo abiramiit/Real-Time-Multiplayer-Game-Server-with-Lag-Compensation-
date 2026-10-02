@@ -15,6 +15,6 @@ export declare class NetworkSimulator {
     constructor(url: string, config: NetworkConfig);
     send(data: string): void;
     close(): void;
-    get readyState(): 0 | 1 | 2 | 3;
+    get readyState(): number;
 }
 //# sourceMappingURL=NetworkSimulator.d.ts.map

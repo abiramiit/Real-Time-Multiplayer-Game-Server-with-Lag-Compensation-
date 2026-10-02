@@ -7,12 +7,27 @@ import { CoreRoom } from './logic/CoreRoom';
 import { logger } from './utils/logger';
 import { telemetry } from './utils/MetricsManager';
 
+import http from 'http';
+
 const PORT = parseInt(process.env.PORT || "8080", 10);
 const SERVER_ID = process.env.SERVER_ID || `server-${PORT}-${Math.random().toString(36).substring(7)}`;
 
 telemetry.init(SERVER_ID);
 
-const wss = new WebSocketServer({ host: '0.0.0.0', port: PORT });
+const server = http.createServer((req, res) => {
+    console.log(`[HTTP] Incoming request: ${req.method} ${req.url}`);
+    if (req.method === 'GET' && req.url === '/') {
+        console.log(`[HTTP] Responding 200 OK`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'ok', service: 'multiplayer-server' }));
+    } else {
+        console.log(`[HTTP] Responding 404`);
+        res.writeHead(404);
+        res.end();
+    }
+});
+
+const wss = new WebSocketServer({ server });
 const activeRooms: Map<string, CoreRoom> = new Map();
 const proxyConnections: Map<string, WebSocket[]> = new Map();
 const wsRttMap: Map<WebSocket, number> = new Map();
@@ -231,7 +246,9 @@ const pingWorker = setInterval(() => {
     });
 }, 1000);
 
-console.log(`[${SERVER_ID}] Edge Node runtime ready on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`[${SERVER_ID}] Edge Node runtime ready on HTTP/WS port ${PORT}`);
+});
 
 // Cleanup hooks loosely
 process.on('SIGINT', () => {
