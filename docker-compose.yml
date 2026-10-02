@@ -35,6 +35,6 @@ services:
       context: .
       dockerfile: packages/client/Dockerfile
     ports:
-      - "3001:80"
+      - "3100:80"
     depends_on:
       - backend

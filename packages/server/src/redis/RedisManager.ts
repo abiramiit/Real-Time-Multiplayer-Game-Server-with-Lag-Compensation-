@@ -19,6 +19,10 @@ export class RedisManager {
     constructor() {
         this.pub = new Redis(REDIS_URL);
         this.sub = new Redis(REDIS_URL);
+
+        // Prevent Unhandled 'error' events from crashing the node process
+        this.pub.on('error', (err) => console.error('\x1b[31m[Redis Pub] Error: Cannot connect to Redis!\x1b[0m Please ensure Docker is running or Redis is installed on this machine.', err.message));
+        this.sub.on('error', (err) => console.error('\x1b[31m[Redis Sub] Error: Cannot connect to Redis!\x1b[0m', err.message));
     }
 }
 

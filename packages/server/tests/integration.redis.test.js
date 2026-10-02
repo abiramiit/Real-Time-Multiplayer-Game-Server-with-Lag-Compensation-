@@ -30,8 +30,8 @@ describe('Part G: Real Multi-Server Redis Validation', () => {
     const redis = new Redis('redis://127.0.0.1:6379');
     beforeAll(async () => {
         const indexPath = path.join(__dirname, '../src/index.ts');
-        const envA = { ...process.env, PORT: '9106', SERVER_ID: 'SA' };
-        const envB = { ...process.env, PORT: '9107', SERVER_ID: 'SB' };
+        const envA = { ...process.env, PORT: '9108', SERVER_ID: 'SA' };
+        const envB = { ...process.env, PORT: '9109', SERVER_ID: 'SB' };
         // Hook removed
         serverA = spawn('npx.cmd', ['tsx', indexPath], { env: envA, shell: true });
         serverB = spawn('npx.cmd', ['tsx', indexPath], { env: envB, shell: true });
@@ -49,14 +49,14 @@ describe('Part G: Real Multi-Server Redis Validation', () => {
     });
     it('Cross-server true physics execution & atomicity lifecycle', async () => {
         const ROOM = `rm-${Math.random().toString(36).substring(2, 9)}`;
-        const wsA = new WebSocket('ws://localhost:9106');
-        const wsB = new WebSocket('ws://localhost:9107');
+        const wsA = new WebSocket('ws://localhost:9108');
+        const wsB = new WebSocket('ws://localhost:9109');
         const ctx = {
             roomId: ROOM,
             pidA: serverA?.pid,
             pidB: serverB?.pid,
-            portA: 9106,
-            portB: 9107
+            portA: 9108,
+            portB: 9109
         };
         // 6. Listen for WELCOME precisely dodging synchronous Promise traps BY REGISTERING BEFORE AWAITING OPEN!
         const welcomeAPromise = waitForMessage(wsA, m => m.type === 'WELCOME', 3000, { ...ctx, expecting: 'WELCOME on A' });

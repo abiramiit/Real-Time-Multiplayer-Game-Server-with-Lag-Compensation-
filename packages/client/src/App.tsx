@@ -59,7 +59,9 @@ function App() {
   useEffect(() => {
     if (wsRef.current) wsRef.current.close();
 
-    const sim = new NetworkSimulator(`ws://localhost:${serverPort}`, netConfig);
+    const defaultWsUrl = import.meta.env.VITE_WS_URL;
+    const wsUrl = defaultWsUrl || `ws://localhost:${serverPort}`;
+    const sim = new NetworkSimulator(wsUrl, netConfig);
     wsRef.current = sim;
 
     sim.onopen = () => {

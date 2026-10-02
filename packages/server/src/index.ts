@@ -12,7 +12,7 @@ const SERVER_ID = process.env.SERVER_ID || `server-${PORT}-${Math.random().toStr
 
 telemetry.init(SERVER_ID);
 
-const wss = new WebSocketServer({ port: PORT });
+const wss = new WebSocketServer({ host: '0.0.0.0', port: PORT });
 const activeRooms: Map<string, CoreRoom> = new Map();
 const proxyConnections: Map<string, WebSocket[]> = new Map();
 const wsRttMap: Map<WebSocket, number> = new Map();
